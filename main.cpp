@@ -19,7 +19,7 @@ double timesBubble(vector<int>& dataBubble, unsigned int numInteractions)
         auto startBubble = steady_clock::now();
         BubbleSort(dataBubble);
         auto stopBubble = steady_clock::now();
-        auto durationBubble = duration_cast<milliseconds>(stopBubble - startBubble);
+        auto durationBubble = duration_cast<microseconds>(stopBubble - startBubble);
         timesBubble.push_back(durationBubble.count());
     }
 
@@ -41,7 +41,7 @@ double timesHeap(vector<int>& dataHeap, unsigned int numInteractions)
         auto startHeap = steady_clock::now();
         HeapSort(dataHeap);
         auto stopHeap = steady_clock::now();
-        auto durationHeap = duration_cast<milliseconds>(stopHeap - startHeap);
+        auto durationHeap = duration_cast<microseconds>(stopHeap - startHeap);
         timesHeap.push_back(durationHeap.count());
     }
 
@@ -53,8 +53,44 @@ double timesHeap(vector<int>& dataHeap, unsigned int numInteractions)
     return sumHeap / timesHeap.size();
 }
 
-int main() {
-    size_t size = 10000;  
+template<typename T>
+string ArrayToString(const vector<T>& v)
+{
+    string str;
+    ostringstream toString;
+    toString << "[ ";
+    for (const T& e: v)
+        toString << e << " ";
+    toString << "]";
+
+    return toString.str();
+}
+
+struct ClassObj{
+    double value;
+
+    
+};
+
+inline bool operator< (const ClassObj& lhs, const ClassObj& rhs) { return lhs.value < rhs.value; }
+
+int main(int argc, char *argv[])
+{
+
+    for(int a = 0; a < argc; a++)
+        cout << argv[a] << " ";
+    cout << endl;
+
+    size_t size = 10;
+    if(argc > 1)
+    {
+        istringstream convert(argv[1]);
+        convert >> size;
+        cout << "use value: "  << size << endl;
+    }
+    else
+        cerr << "use default value: "  << size << endl;
+
 
     unsigned int numInteractions = 10;
 
@@ -71,8 +107,8 @@ int main() {
     double AverageHeap = timesHeap(firstDataHeap, numInteractions);
 
    
-    cout << "The average time for the bubble algorithm for a fully ordered vector is: " << AverageBubble << " milliseconds" << endl;
-    cout << "The average time for the heap algorithm for a fully ordered vector is: " << AverageHeap << " milliseconds" << endl;
+    cout << "The average time for the bubble algorithm for a fully ordered vector is: " << AverageBubble << " microseconds" << endl;
+    cout << "The average time for the heap algorithm for a fully ordered vector is: " << AverageHeap << " microseconds" << endl;
 
    
     vector<int> secondData(size);
@@ -90,8 +126,8 @@ int main() {
     double secondAverageHeap = timesHeap(secondDataHeap, numInteractions);
 
   
-    cout << "The average time for the bubble algorithm for a random vector is: " << secondAverageBubble << " milliseconds" << endl;
-    cout << "The average time for the heap algorithm for a random vector is: " << secondAverageHeap << " milliseconds" << endl;
+    cout << "The average time for the bubble algorithm for a random vector is: " << secondAverageBubble << " microseconds" << endl;
+    cout << "The average time for the heap algorithm for a random vector is: " << secondAverageHeap << " microseconds" << endl;
 
  
     vector<int> thirdData(size);
@@ -111,8 +147,10 @@ int main() {
     double thirdAverageHeap = timesHeap(thirdDataHeap, numInteractions);
 
     
-    cout << "The average time for the bubble algorithm for a slightly random vector is: " << thirdAverageBubble << " milliseconds" << endl;
-    cout << "The average time for the heap algorithm for a slightly random vector is: " << thirdAverageHeap << " milliseconds" << endl;
+    cout << "The average time for the bubble algorithm for a slightly random vector is: " << thirdAverageBubble << " microseconds" << endl;
+    cout << "The average time for the heap algorithm for a slightly random vector is: " << thirdAverageHeap << " microseconds" << endl;
 
     return 0;
 }
+
+
